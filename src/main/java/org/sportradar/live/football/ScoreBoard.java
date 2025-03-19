@@ -1,6 +1,6 @@
 package org.sportradar.live.football;
 
-
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -13,27 +13,38 @@ public class ScoreBoard {
         this.matches = new ArrayList<>();
     }
 
-    public void startMatch(final String home, final String away) {
-        matches.add(new Match(home, away));
+    public void addMatch(final String home, final String away, final LocalTime matchTime) {
+        matches.add(new Match(home, away, matchTime));
     }
 
-    public void updateScore(final int scoreHome, final int scoreAway) {
+    public void updateScore(final String home, final String away, final int scoreHome, final int scoreAway) {
         for (Match match : matches) {
-            if (match.startMatch()) {
+            if (match.startMatch(LocalTime.now()) &&
+                    match.getMatchSummary().startsWith(home + " ") &&
+                    match.getMatchSummary().contains(" " + away)) {
                 match.updateScore(scoreHome, scoreAway);
             }
         }
     }
 
-    public void finishMatch( String home, String away) {
-        matches.removeIf(Match::endMatch);
-    }
-
     public List<String> getSummary() {
         return matches.stream()
-                .sorted(Comparator.comparingInt(Match::getTotalScore).reversed()
-                        .thenComparingLong(Match::getMatchTime).reversed())
+                .sorted(Comparator.comparingInt(Match::getTotalScore)
+                        .thenComparing(match -> match.getMatchTime().isAfter(LocalTime.now())).reversed())
                 .map(Match::getMatchSummary)
                 .toList();
     }
+
+    public List<String> getAndRemoveFinishedMatches() {
+        List<Match> finishedMatches = matches.stream()
+                .filter(match -> match.endMatch(LocalTime.now()))
+                .toList();
+
+        matches.removeAll(finishedMatches);
+
+        return finishedMatches.stream()
+                .map(Match::getMatchSummary)
+                .toList();
+    }
+
 }
