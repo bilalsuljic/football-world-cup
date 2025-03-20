@@ -29,11 +29,14 @@ public class ScoreBoard {
 
     public List<String> getSummary() {
         return matches.stream()
-                .sorted(Comparator.comparingInt(Match::getTotalScore)
-                        .thenComparing(match -> match.getMatchTime().isAfter(LocalTime.now())).reversed())
+                .sorted(Comparator.comparingInt((Match match) -> match.startMatch(LocalTime.now()) ? 0 : 1)
+                        .thenComparingInt(Match::getTotalScore)
+                        .thenComparing(Match::getMatchTime))
                 .map(Match::getMatchSummary)
                 .toList();
     }
+
+
 
     public List<String> getAndRemoveFinishedMatches() {
         List<Match> finishedMatches = matches.stream()

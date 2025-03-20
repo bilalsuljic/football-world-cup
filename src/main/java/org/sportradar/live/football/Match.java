@@ -60,4 +60,5 @@ public class Match {
     protected LocalTime getMatchTime() {
         return matchTime;
     }
+
 }
