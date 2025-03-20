@@ -36,8 +36,6 @@ public class ScoreBoard {
                 .toList();
     }
 
-
-
     public List<String> getAndRemoveFinishedMatches() {
         List<Match> finishedMatches = matches.stream()
                 .filter(match -> match.endMatch(LocalTime.now()))
