@@ -4,7 +4,7 @@ The scope of a project
 
 This dummy application simulates the Football World Cup scoreboard. This library will return all current and upcoming matches, as well as matches that have already finished along with their results. 
 The scoreboard will display the matches ordered by the most goals scored, followed by the upcoming matches.
-Make sure you have installed all there prerequisites on your development machine.
+Make sure you have installed all the necessary libraries on your development machine.
 
 Example
 
