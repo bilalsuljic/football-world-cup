@@ -29,8 +29,8 @@ public class ScoreBoard {
 
     public List<String> getSummary() {
         return matches.stream()
-                .sorted(Comparator.comparingInt((Match match) -> match.startMatch(LocalTime.now()) ? 0 : 1)
-                        .thenComparingInt(Match::getTotalScore)
+                .sorted(Comparator.comparingInt(Match::getTotalScore).reversed()
+                        .thenComparingInt((Match match) -> match.startMatch(LocalTime.now()) ? 0 : 1)
                         .thenComparing(Match::getMatchTime))
                 .map(Match::getMatchSummary)
                 .toList();
@@ -44,6 +44,7 @@ public class ScoreBoard {
         matches.removeAll(finishedMatches);
 
         return finishedMatches.stream()
+                .sorted(Comparator.comparingInt(Match::getTotalScore).reversed())
                 .map(Match::getMatchSummary)
                 .toList();
     }

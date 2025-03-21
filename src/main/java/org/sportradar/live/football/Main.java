@@ -9,11 +9,15 @@ public class Main {
 
         scoreBoard.addMatch("Brazil", "Argentina", time.minusMinutes(90));
         scoreBoard.addMatch("Slovenia", "Germany", time.minusMinutes(30));
+        scoreBoard.addMatch("Uruguay", "Italy", time.minusMinutes(10));
+        scoreBoard.addMatch("Mexico", "Canada", time.minusMinutes(20));
         scoreBoard.addMatch("France", "England", time.plusMinutes(30));
         scoreBoard.addMatch("BiH", "Austria", time.plusMinutes(10));
 
         scoreBoard.updateScore("Brazil", "Argentina", 1,0);
         scoreBoard.updateScore("Slovenia", "Germany", 1,3);
+        scoreBoard.updateScore("Uruguay", "Italy", 6,6);
+        scoreBoard.updateScore("Mexico", "Canada", 1,5);
         scoreBoard.updateScore("BiH", "Austria", 3,3);
         scoreBoard.updateScore("France", "England", 3,2);
 
